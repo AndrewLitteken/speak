@@ -1,9 +1,8 @@
-# speak
-A natural language programming language
+# speak: A natural language programming language
 
-Type english instructions
+Type English instructions
 
-Download compileable python code 
+Download compileable Python code 
 
 Written in Python with spaCy NLP tools
 
