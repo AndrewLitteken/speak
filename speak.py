@@ -10,9 +10,14 @@ from replacewords import replace
 import sys
 import spacy
 import cgi
+from flask import Flask
+from flask import request
+from flask import json
 from Statement import *
 from Instantiation import *
 from Operation import *
+
+app = Flask(__name__)
 
 def find_val(child):
     if child.n_lefts == 0 and child.n_rights == 0:
@@ -205,10 +210,13 @@ def convert_to_code(tree):
         tree = tree.next 
     return output 
 
+@app.route('/speakcompiler', methods=['POST'])
 def main():
     start = None
     end = None
-    for line in sys.stdin:
+    text_vals = request.get_json()
+    code_text = text_vals["text"].split("\n")
+    for line in code_text:
         word_info, op_info = parse_line(line)
         statement = create_tree_node(word_info, op_info)
         if not start:
@@ -217,9 +225,9 @@ def main():
         else:
             end.next = statement
             end = statement
+    results = convert_to_code(start)
+    response = app.response_class(response = results, status=200,mimetype="text/html")
+    return response
 
-    print(convert_to_code(start))
-
-main()
-form = cgi.FieldStorage()
-codetext = form.getvalue("codetext")
+if __name__ == '__main__':
+    app.run(debug=False, use_reloader=True)
