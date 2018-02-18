@@ -1,3 +1,5 @@
+## speak: a natural language compiler
+
 ## Inspiration
 The technology industry is growing faster than ever. Despite the need for more computer scientists, memorizing syntax can be daunting for beginners. This drew the inspiration for **speak: a compiler that understands** English instructions and translates them into compilable Python code. This makes coding more **accessible**, easy, and enjoyable.
 ## What it does
